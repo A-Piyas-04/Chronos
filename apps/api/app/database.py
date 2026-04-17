@@ -1,16 +1,7 @@
+"""Database connectivity — re-exports for health checks and legacy imports."""
+
 from __future__ import annotations
 
-from sqlalchemy import create_engine, text
-from sqlalchemy.engine import Engine
+from app.db.session import check_database_ready, get_engine
 
-from app.config import get_settings
-
-
-def get_engine() -> Engine:
-    settings = get_settings()
-    return create_engine(settings.database_url, pool_pre_ping=True)
-
-
-def check_database_ready(engine: Engine) -> None:
-    with engine.connect() as connection:
-        connection.execute(text("SELECT 1"))
+__all__ = ["check_database_ready", "get_engine"]

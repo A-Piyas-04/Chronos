@@ -12,3 +12,10 @@ def to_user_timezone(value: datetime, tz_name: str) -> datetime:
     if value.tzinfo is None:
         value = value.replace(tzinfo=UTC)
     return value.astimezone(ZoneInfo(tz_name))
+
+
+def ensure_utc(value: datetime) -> datetime:
+    """Treat naive datetimes as UTC; normalize aware values to UTC."""
+    if value.tzinfo is None:
+        return value.replace(tzinfo=UTC)
+    return value.astimezone(UTC)
